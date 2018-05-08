@@ -55,8 +55,16 @@ angular.module('todoApp').directive('barChart',function(){
               .style("fill", "steelblue")
               .attr("x", function(d) { return x(d.age); })
               .attr("width", x.bandwidth())
-              .attr("y", function(d) { return y(d.population); })
-              .attr("height", function(d) { return height - y(d.population); });
+              .attr("y", height);
+            if(scope.data.drawAnimation){
+                bar.transition()
+                  .attr("y", function(d) { return y(d.population); })
+                  .attr("height", function(d) { return height - y(d.population); })
+                .duration(1500);
+            }else{
+                bar.attr("y", function(d) { return y(d.population); })
+                  .attr("height", function(d) { return height - y(d.population); });
+            }
 
             // add the x Axis
             svg.append("g")
