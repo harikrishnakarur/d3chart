@@ -68,9 +68,11 @@ angular.module('todoApp').directive('pieChart',function(){
                     var value="";
                     var keys = Object.keys(scope.data.toolTipToDisplay);
                     for(var i=0;i<keys.length;i++){
-                        value += scope.data.toolTipToDisplay[keys[i]] + ":" + data[keys[i]];
-                        if(i<keys.length-1){
-                            value +="<br/>";
+                        if(data[keys[i]]){
+                            value += scope.data.toolTipToDisplay[keys[i]] + ":" + data[keys[i]];
+                            if(i<keys.length-1){
+                                value +="<br/>";
+                            }
                         }
                     }
                     return value;
