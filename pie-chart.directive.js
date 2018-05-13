@@ -75,11 +75,11 @@ angular.module('todoApp').directive('pieChart',function(){
                     .innerRadius(0)
                     .outerRadius(radius + 10);
                 arc.on("mouseover", function(d) {	
-                    d3.select(this)      // make a selection of the parent g
-                      .select("path")    // select the child path element
-                      .transition()      // create a transition for the path
-                      .attr("d", arcOver)// update the path's d attribute
-                      .duration(200);   // do it slowly.
+                    d3.select(this)
+                      .select("path")
+                      .transition()
+                      .attr("d", arcOver)
+                      .duration(200);
                     div.style("position", "absolute")
                         .style("opacity", .9)
                         .style("left", d3.event.clientX+"px")
@@ -93,11 +93,11 @@ angular.module('todoApp').directive('pieChart',function(){
                 }).on("mouseout", function(d) {		
                     div.transition()	
                         .style("opacity", 0);
-                    d3.select(this)      // make a selection of the parent g
-                      .select("path")    // select the child path element
-                      .transition()      // create a transition for the path
-                      .attr("d", path)// update the path's d attribute
-                      .duration(200);   // do it slowly.
+                    d3.select(this)
+                      .select("path")
+                      .transition()
+                      .attr("d", path)
+                      .duration(200);
                     });
 
 //            });
