@@ -43,29 +43,29 @@ angular.module('todoApp').directive('barChart',function(){
                 }
             var data = scope.data.data;
             data.forEach(function(d) {
-                d.population = +d.population;
+                d[scope.data.value] = +d[scope.data.value];
             });
 
             // Scale the range of the data in the domains
-            x.domain(data.map(function(d) { return d.age; }));
-            y.domain([0, d3.max(data, function(d) { return d.population; })]);
+            x.domain(data.map(function(d) { return d[scope.data.category]; }));
+            y.domain([0, d3.max(data, function(d) { return d[scope.data.value]; })]);
 
             // append the rectangles for the bar chart
             var bar = svg.selectAll(".bar")
               .data(data)
             .enter().append("rect")
-              .style("fill", "steelblue")
-              .attr("x", function(d) { return x(d.age); })
+              .style("fill", ((typeof scope.data.colors)==="string") ? scope.data.colors : scope.data.colors[0])
+              .attr("x", function(d) { return x(d[scope.data.category]); })
               .attr("width", x.bandwidth())
               .attr("y", height);
             if(scope.data.drawAnimation){
                 bar.transition()
-                  .attr("y", function(d) { return y(d.population); })
-                  .attr("height", function(d) { return height - y(d.population); })
+                  .attr("y", function(d) { return y(d[scope.data.value]); })
+                  .attr("height", function(d) { return height - y(d[scope.data.value]); })
                 .duration(1500);
             }else{
-                bar.attr("y", function(d) { return y(d.population); })
-                  .attr("height", function(d) { return height - y(d.population); });
+                bar.attr("y", function(d) { return y(d[scope.data.value]); })
+                  .attr("height", function(d) { return height - y(d[scope.data.value]); });
             }
 
             // add the x Axis

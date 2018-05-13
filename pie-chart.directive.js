@@ -18,7 +18,7 @@ angular.module('todoApp').directive('pieChart',function(){
 
             var pie = d3.pie()
                 .sort(null)
-                .value(function(d) { return d.population; });
+                .value(function(d) { return d[scope.data.value]; });
 
             var path = d3.arc()
                 .outerRadius(radius - 10)
@@ -28,11 +28,6 @@ angular.module('todoApp').directive('pieChart',function(){
                 .outerRadius(radius - 40)
                 .innerRadius(radius - 40);
 
-            /*d3.csv("data.csv", function(d) {
-              d.population = +d.population;
-              return d;
-            }, function(error, data) {
-              if (error) throw error;*/
             var data = scope.data.data;
             var div = d3.select("body").append("div")	
                 .attr("class", "tooltip")				
@@ -44,7 +39,7 @@ angular.module('todoApp').directive('pieChart',function(){
               
               if(scope.data.drawAnimation){  
                 arc.append("path")
-                    .style("fill", function(d) { return color(d.data.age); })
+                    .style("fill", function(d) { return color(d.data[scope.data.category]); })
                     .transition().delay(function(d,i) {return i * 50; }).duration(50)
                     .attrTween('d', function(d) {
                     var i = d3.interpolate(d.startAngle+0.1, d.endAngle);
@@ -56,14 +51,13 @@ angular.module('todoApp').directive('pieChart',function(){
               }else{
                 arc.append("path")
                     .attr("d", path)
-                    .style("fill", function(d) { return color(d.data.age); })
+                    .style("fill", function(d) { return color(d.data[scope.data.category]); })
               }
-//                  .attr("fill", function(d) { return color(d.data.age); });
-
+            
               arc.append("text")
                   .attr("transform", function(d) { return "translate(" + label.centroid(d) + ")"; })
                   .attr("dy", "0.35em")
-                  .text(function(d) { return d.data.age; });
+                  .text(function(d) { return d.data[scope.data.category]; });
                 var getToolTip = function(data){
                     var value="";
                     var keys = Object.keys(scope.data.toolTipToDisplay);
